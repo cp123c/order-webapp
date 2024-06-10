@@ -1,9 +1,9 @@
 import React from "react";
 import Slider from "react-slick";
+import { formatCurrencies } from "../utils/utils";
 
 const settings = {
   dots: false,
-  // autoplay: true,
   autoplaySpeed: 4000,
   arrows: false,
   infinite: true,
@@ -39,10 +39,10 @@ const ItemBox = ({
         </div>
         <div className="flex gap-2">
           <div className=" bg-[#fcf2ea] rounded-full px-2 text-xs float-start font-semibold">
-            {percenterOff}
+            {percenterOff}% OFF
           </div>
           <div className=" bg-[#fcf2ea] rounded-full px-2 text-xs float-start font-semibold">
-            {rmOff}
+            RM {formatCurrencies(rmOff)}
           </div>
         </div>
       </div>
