@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { Tag } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { sliceUpContent } from "../store/slideUpContent-slice";
-import { formatCurrencies } from "../utils/utils";
+import { sliceUpContent } from "@store/slideUpContent-slice";
+import { formatCurrencies } from "@utils/utils";
 
 const SlideUpContent = () => {
   const ref = useRef(null);

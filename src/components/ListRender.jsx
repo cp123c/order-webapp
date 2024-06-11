@@ -1,6 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
-import { formatCurrencies } from "../utils/utils";
+import { formatCurrencies } from "@utils/utils";
+import { twMerge } from "tailwind-merge";
 
 const settings = {
   dots: false,
@@ -50,9 +51,9 @@ const ItemBox = ({
   );
 };
 
-const ListRender = ({ title, data }) => {
+const ListRender = ({ className, title, data }) => {
   return (
-    <div className="w-full">
+    <div className={twMerge("w-full", className)}>
       <div className="flex py-3">
         <div className="font-bold flex text-lg">{title}</div>
       </div>

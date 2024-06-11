@@ -1,16 +1,22 @@
 import React from "react";
 import { Tag } from "lucide-react";
-import { formatCurrencies } from "../utils/utils";
-import { sliceUpContent } from "../store/slideUpContent-slice";
+import { formatCurrencies } from "@utils/utils";
+import { sliceUpContent } from "@store/slideUpContent-slice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Items = ({ data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleHandler = () => {
-    const {outlet} = data
+    const { outlet } = data;
     dispatch(sliceUpContent.toggle());
     dispatch(sliceUpContent.getOutlet(outlet));
+  };
+
+  const goProductDetailPage = () => {
+    navigate("/products");
   };
 
   const {
@@ -28,7 +34,7 @@ const Items = ({ data }) => {
   return (
     <div
       className="mt-5 pb-2 flex"
-      onClick={outlet.length > 1 ? toggleHandler : null}
+      onClick={outlet.length > 1 ? toggleHandler : goProductDetailPage}
     >
       <div className="w-[7rem] h-[4rem] flex items-start justify-center pt-1">
         <img src={image} className="rounded-xl" alt="" />

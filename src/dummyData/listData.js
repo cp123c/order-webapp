@@ -1,4 +1,4 @@
-export const DATAforVer = [
+export const DATA_1 = [
   {
     id: 1,
     image: "./home1.jpg",
@@ -34,7 +34,7 @@ export const DATAforVer = [
   },
 ];
 
-export const DATAforHor = [
+export const DATA_2 = [
   {
     id: 1,
     image: "./home4.jpg",

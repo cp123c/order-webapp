@@ -1,6 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { ArrowRight } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 const settings = {
   dots: false,
@@ -36,9 +37,9 @@ const EachSliderContent = ({data:{title,name,image,desc}}) => {
   );
 };
 
-const SliderFoodOffer = ({data}) => {
+const SliderFoodOffer = ({className,data}) => {
   return (
-    <div className="w-full">
+    <div className={twMerge("w-full", className)} >
       <div></div>
       <Slider {...settings}>
         {data.map((data)=>{
