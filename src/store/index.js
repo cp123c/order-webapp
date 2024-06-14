@@ -1,8 +1,12 @@
-import {configureStore} from '@reduxjs/toolkit';
-import SliceUpContent from './slideUpContent-slice';
+import { configureStore } from "@reduxjs/toolkit";
+import Foodproduct from "./FoodProduct-slice"; 
+import BottomSheet from "./BottomSheet-slice";
 
 const store = configureStore({
-    reducer:{ slideUp:SliceUpContent.reducer}
-})
+  reducer: {
+    foodproduct: Foodproduct.reducer,
+    bottomSheet: BottomSheet.reducer,
+  },
+});
 
-export default store
+export default store;

@@ -27,7 +27,7 @@ const EachSliderContent = ({data:{title,name,image,desc}}) => {
       <div className="rounded-md mr-4">
         <img src={image} className="w-full h-48" alt="" />
       </div>
-      <div className=" leading-tight">
+      <div className="leading-tight">
         <div className="font-semibold pt-2 w-full">
           {desc}
         </div>

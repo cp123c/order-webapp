@@ -162,3 +162,36 @@ export const HOME_SLIDE = [
     name: "sarawak cafe",
   },
 ]
+
+export const PRODUCT_DETAIL_DATA = [
+  {
+    id: 1,
+    image: "./home4.jpg",
+    name: "Da hong Pao Milk Tea",
+    promo:10,
+    price: 13.60,
+    popular:true,
+  },
+  {
+    id: 2,
+    image: "./home4.jpg",
+    name: "Jasmine Green Milk Tea",
+    price: 15,
+    popular:true,
+  },
+  {
+    id: 3,
+    image: "./home4.jpg",
+    name: "Lapsang Suochong Black Milk Tea",
+    promo:30,
+    price: 12.60,
+    popular:false,
+  },
+  {
+    id: 4,
+    image: "./home4.jpg",
+    name: "Camellia Oolong Milk Tea",
+    price: 15.20,
+    popular:false,
+  },
+]
