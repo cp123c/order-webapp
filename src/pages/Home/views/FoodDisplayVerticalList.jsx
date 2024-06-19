@@ -1,13 +1,13 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Tag } from "lucide-react";
 import { formatCurrencies } from "@utils/utils";
 import { FoodproductActions } from "@store/FoodProduct-slice";
 import { BottomSheetActions } from "@store/BottomSheet-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { BottomSheet } from "./BottomSheet";
+import BottomSheet from "@components/BottomSheet";
 
-const Items = ({ data }) => {
+const ItemBox = ({ data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -15,14 +15,14 @@ const Items = ({ data }) => {
     const { outlet } = data;
     dispatch(BottomSheetActions.toggle());
     dispatch(FoodproductActions.getOutlet(outlet));
-    console.log("asdasd");
   };
 
-  const goProductDetailPage = () => {
-    navigate("/products");
+  const goProductDetailPage = ({ id }) => {
+    navigate(`/products/${id}`);
   };
 
   const {
+    id,
     image,
     foodName,
     rating,
@@ -37,7 +37,9 @@ const Items = ({ data }) => {
   return (
     <div
       className="mt-5 pb-2 flex"
-      onClick={outlet.length > 1 ? toggleHandler : goProductDetailPage}
+      onClick={
+        outlet.length > 1 ? toggleHandler : () => goProductDetailPage(id)
+      }
     >
       <div className="w-[7rem] h-[4rem] flex items-start justify-center pt-1">
         <img src={image} className="rounded-xl" alt="" />
@@ -183,13 +185,13 @@ const OutletList = () => {
   );
 };
 
-const FoodListRender = ({ data }) => {
+const FoodDisplayVerticalList = ({ data }) => {
   const showModal = useSelector((state) => state.bottomSheet.isToggle);
   const dispatch = useDispatch();
   return (
     <>
       {data.map((data) => {
-        return <Items key={data.id} data={data} />;
+        return <ItemBox key={data.id} data={data} />;
       })}
       <BottomSheet
         visible={showModal}
@@ -201,4 +203,4 @@ const FoodListRender = ({ data }) => {
   );
 };
 
-export default FoodListRender;
+export default FoodDisplayVerticalList;

@@ -51,7 +51,7 @@ const ItemBox = ({
   );
 };
 
-const ListRender = ({ className, title, data }) => {
+const FoodDisplayHorizontalList = ({ className, title, data }) => {
   return (
     <div className={twMerge("w-full", className)}>
       <div className="flex py-3">
@@ -66,4 +66,4 @@ const ListRender = ({ className, title, data }) => {
   );
 };
 
-export default ListRender;
+export default FoodDisplayHorizontalList;

@@ -16,7 +16,7 @@ const settings = {
   swipeToSlide: true,
 };
 
-const EachSliderContent = ({data:{title,name,image,desc}}) => {
+const Slides = ({ data: { title, name, image, desc } }) => {
   return (
     <div>
       <div className="flex py-3">
@@ -28,26 +28,24 @@ const EachSliderContent = ({data:{title,name,image,desc}}) => {
         <img src={image} className="w-full h-48" alt="" />
       </div>
       <div className="leading-tight">
-        <div className="font-semibold pt-2 w-full">
-          {desc}
-        </div>
+        <div className="font-semibold pt-2 w-full">{desc}</div>
         <span className="text-sm">{name}</span>
       </div>
     </div>
   );
 };
 
-const SliderFoodOffer = ({className,data}) => {
+const BannerSlide = ({ className, data }) => {
   return (
-    <div className={twMerge("w-full", className)} >
+    <div className={twMerge("w-full", className)}>
       <div></div>
       <Slider {...settings}>
-        {data.map((data)=>{
-            return <EachSliderContent key={data.id} data={data} />
+        {data.map((data) => {
+          return <Slides key={data.id} data={data} />;
         })}
       </Slider>
     </div>
   );
 };
 
-export default SliderFoodOffer;
+export default BannerSlide;

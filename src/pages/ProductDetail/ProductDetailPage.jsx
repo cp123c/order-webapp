@@ -1,22 +1,15 @@
-import React from "react";
-import {
-  ArrowLeft,
-  Share2,
-  Users,
-  Star,
-  Tags,
-  Infinity,
-  X,
-  Tag,
-  Plus,
-  Minus,
-} from "lucide-react";
-import { DATA_1, DATA_2, PRODUCT_DETAIL_DATA } from "../dummyData/listData";
-import { useNavigate } from "react-router-dom";
-import ProductList from "@components/layout/ProductList";
+import React, { useEffect, useState } from "react";
+import { Share2, X, Tag, Plus, Minus } from "lucide-react";
+import { useParams } from "react-router-dom";
+import ProductList from "./views/ProductList";
 import { useSelector, useDispatch } from "react-redux";
-import { BottomSheetActions } from "../store/BottomSheet-slice";
-import { BottomSheet } from "../components/BottomSheet";
+import { BottomSheetActions } from "@store/BottomSheet-slice";
+import BottomSheet from "@components/BottomSheet";
+import { fetchProductFakeData } from "@utils/api";
+import SkeletonLoading from "@components/SkeletonLoading";
+import Cart from "@components/Cart";
+import TopView from "./views/TopView";
+import ProductDescBox from "./views/ProductDescBox";
 
 const ProductOptions = () => {
   const dispatch = useDispatch();
@@ -24,13 +17,10 @@ const ProductOptions = () => {
     <div className="relative">
       <div className="relative bg-slate-500 w-full h-44">
         <div className="w-full h-full overflow-hidden">
-          <img className="object-cover" src="./home3.jpg" alt="" />
+          <img className="object-cover" src="/home3.jpg" alt="" />
         </div>
         <div className="absolute top-4 w-full flex justify-between p-5">
-          <div
-            className="rounded-full bg-white flex items-center w-[32px] h-[32px] p-1"
-            // onClick={backToHome}
-          >
+          <div className="rounded-full bg-white flex items-center w-[32px] h-[32px] p-1">
             <X onClick={() => dispatch(BottomSheetActions.toggle())} />
           </div>
           <div className="flex gap-2">
@@ -104,7 +94,7 @@ const ProductOptions = () => {
           </div>
           <div className="py-3 border-b flex justify-between items-center">
             <label className="text-sm font-light">
-              <input type="radio" value="Regular" checked /> Takeaway Packaging
+              <input type="radio" value="Regular" /> Takeaway Packaging
             </label>
             <div>
               <span className="font-light text-sm">+0.50</span>
@@ -136,7 +126,9 @@ const ProductOptions = () => {
           </div>
           <div className="flex justify-center py-3 w-full">
             <button className=" bg-slate-400 p-3 rounded-md text-white w-[90%]">
-              <span className="font-semibold text-slate-200">Add to Basket - 14.00 (Incl.tax)</span>
+              <span className="font-semibold text-slate-200">
+                Add to Basket - 14.00 (Incl.tax)
+              </span>
             </button>
           </div>
         </div>
@@ -146,99 +138,46 @@ const ProductOptions = () => {
 };
 
 const Product = () => {
-  const navigate = useNavigate();
+  const { productId } = useParams();
+  const [datalist, setDatalist] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.bottomSheet.isToggle);
 
-  const backToHome = () => {
-    navigate("/");
-  };
+  useEffect(() => {
+    setIsLoading(true);
+    fetchProductFakeData()
+      .then((data) => {
+        setDatalist(data);
+        setIsLoading(false);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [productId]);
 
   return (
     <>
       <div className="relative">
         {/* top section */}
-        <div className="fixed top-0 bg-slate-500 w-full h-40">
-          <div className="w-full h-full overflow-hidden">
-            <img className="object-cover" src="./home3.jpg" alt="" />
-          </div>
-          <div className="fixed top-0 w-full flex justify-between p-5">
-            <div
-              className="rounded-full bg-white flex items-center w-[32px] h-[32px] p-1"
-              onClick={backToHome}
-            >
-              <ArrowLeft />
-            </div>
-            <div className="flex gap-2">
-              <div className="rounded-full bg-white flex gap-2 items-center px-3">
-                <Users size={16} />{" "}
-                <span className="text-sm font-semibold">Group order</span>
-              </div>
-              <div className="rounded-full bg-white flex items-center w-[32px] h-[32px] p-1">
-                <Share2 />
-              </div>
-            </div>
-          </div>
-        </div>
+        <TopView />
+        {/* scrollable content */}
         <div className="relative w-full mt-32">
-          <div className="">
-            <div className="w-full pb-2 bg-gradient-to-t from-white to-black/0">
-              <div className="mx-5 bg-white rounded-lg p-3 shadow-md">
-                <div className="text-lg font-semibold border-b py-3">
-                  <div className="">
-                    KyoChon Korean Fried Chicken - Taman XXX
+          <ProductDescBox />
+          <div className="w-full bg-white">
+            <div className="mx-5">
+              <div className="font-semibold text-lg py-3">For you</div>
+              {isLoading ? (
+                <SkeletonLoading count={4} />
+              ) : (
+                <ProductList data={datalist} />
+              )}
+              {!isLoading ? (
+                <div className="pt-4">
+                  <div className="font-semibold text-lg py-3">
+                    Fresh Mlik Tea Series
                   </div>
+                  <ProductList data={datalist} vertical />
                 </div>
-                <div className="border-b py-3 flex items-center gap-1">
-                  <span>
-                    <Star size="16" />
-                  </span>
-                  <span className="font-bold">4.7</span>
-                  <span className="font-light">(461)</span> <span>&#183;</span>{" "}
-                  Ratings and reviews
-                </div>
-                <div className="border-b py-3">
-                  <div>
-                    <span className="font-bold">7.5 km</span>
-                    <span> (From 45 mins)</span>
-                  </div>
-                  <div className="flex gap-1 items-center">
-                    <span className="text-xs">Deliver now</span> |{" "}
-                    <div className="flex items-center gap-1 text-sm">
-                      <span className="text-orange-400">RM3.00</span>
-                      <span>
-                        <s>RM 6.00</s>
-                      </span>
-                    </div>{" "}
-                  </div>
-                </div>
-                <div className="border-b py-3 flex items-center gap-1">
-                  <span className="text-orange-400">
-                    <Tags />
-                  </span>{" "}
-                  Enjoy discount on items
-                </div>
-                <div className="py-3 bg-red-100 px-2">
-                  <div className="flex items-center gap-2">
-                    <div className="">
-                      <Infinity />
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="font-bold text-sm">
-                        Get GrabUnlimited now
-                      </div>
-                      <div className="text-sm">
-                        Enjoy free delivery (up to RM3.00)
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="w-full bg-white">
-              <div className="mx-5">
-                <ProductList data={PRODUCT_DETAIL_DATA} />
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -251,6 +190,7 @@ const Product = () => {
       >
         <ProductOptions />
       </BottomSheet>
+      <Cart />
     </>
   );
 };
